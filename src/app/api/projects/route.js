@@ -20,17 +20,14 @@ async function getProjects() {
     return projects;
 
   } catch (error) {
-    // head işlemi 404 döndürürse (blob yoksa)
-    // @vercel/blob tarafından fırlatılan hatalar genellikle 'status' özelliğine sahiptir
-    if (error && error.status === 404) {
+    // head işlemi blob'u bulamadığında belirli bir hata mesajı fırlatıyor
+    if (error && error.message === 'Vercel Blob: The requested blob does not exist') {
       // Blob yoksa boş array döndür
-      console.log('Projects blob not found (404), returning empty array.');
+      console.log('Projects blob not found, returning empty array.');
       return [];
     }
-    // Diğer hataları logla ve yeniden fırlat (Daha detaylı loglama eklendi)
-    console.error('Error reading projects from Blob Storage (unhandled):', JSON.stringify(error, Object.getOwnPropertyNames(error))); // Hatanın tüm özelliklerini logla
-    // throw new Error('Projeler okunurken bir hata oluştu.'); // Orijinal hatayı fırlatmak yerine daha bilgilendirici olabilir
-    // Şimdilik orijinal hatayı fırlatmaya devam edelim, loglara bakalım.
+    // Diğer beklenmedik hataları logla ve yeniden fırlat
+    console.error('Unexpected error reading projects from Blob Storage:', error);
     throw new Error('Projeler okunurken bir hata oluştu.');
   }
 }
