@@ -20,10 +20,11 @@ async function getProjects() {
     return projects;
 
   } catch (error) {
-    // head işlemi 404 döndürürse (blob yoksa) veya fetch başarısız olursa
-    if (error.message.includes('404') || error.message.includes('Blob not found')) {
+    // head işlemi 404 döndürürse (blob yoksa)
+    // @vercel/blob tarafından fırlatılan hatalar genellikle 'status' özelliğine sahiptir
+    if (error && error.status === 404) {
       // Blob yoksa boş array döndür
-      console.log('Projects blob not found, returning empty array.');
+      console.log('Projects blob not found (404), returning empty array.');
       return [];
     }
     // Diğer hataları logla ve yeniden fırlat
