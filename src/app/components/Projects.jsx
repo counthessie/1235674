@@ -7,7 +7,7 @@ export default function Projects() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    fetch('/data/projects.json') // Public klasörüne göre yol
+    fetch('/api/projects') // API endpoint'inden projeleri çek
       .then(response => response.json())
       .then(data => setProjects(data))
       .catch(error => console.error('Error fetching projects:', error));
