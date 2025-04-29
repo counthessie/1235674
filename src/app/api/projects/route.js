@@ -27,8 +27,10 @@ async function getProjects() {
       console.log('Projects blob not found (404), returning empty array.');
       return [];
     }
-    // Diğer hataları logla ve yeniden fırlat
-    console.error('Error reading projects from Blob Storage:', error);
+    // Diğer hataları logla ve yeniden fırlat (Daha detaylı loglama eklendi)
+    console.error('Error reading projects from Blob Storage (unhandled):', JSON.stringify(error, Object.getOwnPropertyNames(error))); // Hatanın tüm özelliklerini logla
+    // throw new Error('Projeler okunurken bir hata oluştu.'); // Orijinal hatayı fırlatmak yerine daha bilgilendirici olabilir
+    // Şimdilik orijinal hatayı fırlatmaya devam edelim, loglara bakalım.
     throw new Error('Projeler okunurken bir hata oluştu.');
   }
 }
