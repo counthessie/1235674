@@ -40,6 +40,7 @@ async function saveProjects(projects) {
     await put(PROJECTS_BLOB_KEY, jsonData, {
       access: 'public', // 'public' veya 'private' erişim seviyesini ihtiyaca göre ayarlayın
       contentType: 'application/json', // İçerik tipini belirtmek iyi bir pratiktir
+      allowOverwrite: true, // Mevcut dosyanın üzerine yazmaya izin ver
     });
     console.log('Projects successfully saved to Blob Storage.');
   } catch (error) {
