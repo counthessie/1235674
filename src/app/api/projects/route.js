@@ -23,6 +23,9 @@ async function getProjects() {
 // Projeleri dosyaya yazma fonksiyonu
 async function saveProjects(projects) {
   try {
+    // Yazmadan önce dizinin var olduğundan emin ol
+    await fs.mkdir(path.dirname(dataFilePath), { recursive: true });
+
     const jsonData = JSON.stringify(projects, null, 2); // Düzgün formatlama için null, 2
     await fs.writeFile(dataFilePath, jsonData, 'utf-8');
   } catch (error) {
